@@ -1,0 +1,62 @@
+@page {
+	font-family: "Times New Roman";
+	margin-top: 5cm;
+	margin-bottom: 7cm;
+	margin-left: 2cm;
+	margin-right: 2cm;
+	header: html_letterheader;
+	footer: html_letterfooter2;
+}
+@page letterhead {
+	margin-top: 2.5cm;
+	margin-bottom: 2.5cm;
+	margin-left: 2cm;
+	margin-right: 2cm;
+	footer: html_letterfooter2;
+}
+body{
+	font-family: "Times New Roman";
+}
+
+table {
+	border-collapse: collapse;
+	font-size: 10px;
+}
+.border td {
+	border: 1px solid black;
+	padding: 5px;
+}
+table tr td {
+	overflow: hidden;
+	word-wrap: break-word;
+	border-collapse: collapse;
+}
+.table2 {
+	border-collapse: separate;
+	border: 3px double black;
+	/* position: absolute;
+	top: 20px;
+	right: 0px; */
+}
+.table2 > tr {
+	border: 3px double black;
+}
+.table2 > tr td {
+	border: 3px double black;
+}
+.btn_print{
+	width: 100px;
+	height: 50px;
+	color: white;
+	background:black;
+	position: fixed;
+	bottom:10px;
+	right: 10px;
+	text-align: center;
+	line-height: 50px;
+	border-radius: 25px;
+}
+.btn_print a{
+	color: white;
+	text-decoration:none;
+}
