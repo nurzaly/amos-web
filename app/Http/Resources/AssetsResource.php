@@ -27,9 +27,20 @@ class AssetsResource extends JsonResource
       'no_casis' => $this->no_casis,
       'pegawai' => ucwords($this->pegawai),
       'kod_lokasi' => $this->kod_lokasi,
+      'tarikh_beli' => $this->tarikh_beli,
+      'jenama_model' => $this->jenama_model,
+      'harga_seunit' => 'RM' . $this->harga_seunit,
       'verification_id' => $this->asset_id ?? null,
+      'update_spa' => $this->get_update_spa($this->update_spa),
       'lokasi' => $this->get_short_name($this->kod_lokasi) ?? null,
     ];
+  }
+
+  private function get_update_spa($value){
+    if(empty($value)){
+      return null;
+    }
+    return \Carbon\Carbon::parse($value)->format('d-m-yy h:i A');
   }
 
   private function get_no_casis($no_casis){

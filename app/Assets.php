@@ -9,8 +9,13 @@ use App;
 class Assets extends Model
 {
   protected $fillable = [
-      'no_siri_pendaftaran', 'barcode', 'kategori','sub_kategori','jenis','butiran','no_casis', 'kod_lokasi','pegawai','jenis_aset'
+      'no_siri_pendaftaran', 'barcode', 'kategori','sub_kategori','jenis','butiran','no_casis', 'kod_lokasi','pegawai','jenis_aset','tarikh_beli','jenama_model'
   ];
+
+  public function getUpdateSpaAttribute($value)
+    {
+        return "hai..";
+    }
 
   public static function get_pegawai($email){
     return '[PIC:' . explode('bin',$email)[0] . ']';

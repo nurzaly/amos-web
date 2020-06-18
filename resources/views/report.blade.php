@@ -13,7 +13,8 @@
       <th class="sorting_asc" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending">Bil</th>
       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Bangunan</th>
       <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending">Kod Bangunan</th>
-      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Kewpa11</th>
+      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Kewpa11 2019</th>
+      <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending">Kewpa11 2018</th>
 
     </tr>
   </thead>
@@ -30,6 +31,14 @@
         @if(file_exists(public_path().'/pdf/'.str_replace(' ','-','KEWPA11-'.$v->block_name.'.pdf')))
           | <a target="_blank" href="{{asset('/pdf/'.str_replace(' ','-','KEWPA11-'.$v->block_name.'.pdf'))}}">Laporan terakhir</a>
             -> [{{date('d/m/Y h:i:s A',filemtime(public_path().'/pdf/'.str_replace(' ','-','KEWPA11-'.$v->block_name.'.pdf')))}}]
+        @else
+          | Laporan terakhir -> [Tidak Wujud]
+        @endif
+      </td>
+      <td>
+        @if(file_exists(public_path().'/2018/pdf/'.str_replace(' ','-','KEWPA11-'.$v->block_name.'.pdf')))
+          <a target="_blank" href="{{asset('/2018/pdf/'.str_replace(' ','-','KEWPA11-'.$v->block_name.'.pdf'))}}">Laporan terakhir</a>
+            -> [{{date('d/m/Y h:i:s A',filemtime(public_path().'/2018/pdf/'.str_replace(' ','-','KEWPA11-'.$v->block_name.'.pdf')))}}]
         @else
           | Laporan terakhir -> [Tidak Wujud]
         @endif

@@ -11,6 +11,6 @@ class Staff extends Model
     public $timestamps = false;
 
     public static function get_staf_info($email){
-
+        return self::where('email',$email)->first();
     }
 }

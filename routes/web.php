@@ -21,11 +21,10 @@ Route::get('/', function () {
   return view('welcome');
 });
 
-Route::get('/assets', function () {
-  $assets = Assets::where('id',3);
-  $n = 0;
-  return view('assetslist',compact('assets','n'));
-});
+Route::get('/assets', 'AssetsController@list');
+Route::get('/assets2', 'AssetsController@list2');
+Route::get('/assets/status/{status}/{remark}', 'AssetsController@list2');
+Route::get('/assets/datatable', 'AssetsController@datatable')->name('get.assets');
 
 Route::get('/json-assets', function () {
   $assets = Assets::limit(100)->pluck('no_siri_pendaftaran');
@@ -47,10 +46,17 @@ Route::get('/privacypolicy', function () {
 Route::get('/save-spa', function (Request $request) {
   //return $request->all();
   $barcode = $request->barcode;
+  $no_siri_pendaftaran = $request->no_siri_pendaftaran;
   if(blank($barcode)){
     return 0;
   }
-  $jenis_aset = explode('/',$barcode)[1];
+
+  $jenis_aset = 'I';
+  if (strpos(strtolower($no_siri_pendaftaran), '/h') !== false) {
+    $jenis_aset = 'H';
+  }
+
+  //$jenis_aset = explode('/',$barcode)[1];
   $barcode = str_replace('/','',$barcode);
 
   $result = App\Assets2::updateOrCreate(
@@ -66,7 +72,13 @@ Route::get('/save-spa', function (Request $request) {
       'no_casis' => $request->no_casis,
       'kod_lokasi' => $request->kod_lokasi,
       'pegawai' => $request->pegawai,
-      'jenis_aset' => $jenis_aset
+      'jenis_aset' => $jenis_aset,
+      'status' => $request->status,
+      'harga_seunit' => $request->harga_seunit,
+      'jenama_model' => $request->jenama_model,
+      'tarikh_beli' => $request->tarikh_beli,
+      'page' => $request->page,
+      'bil' => $request->bil,
     ]
   );
   return $result;
@@ -74,11 +86,12 @@ Route::get('/save-spa', function (Request $request) {
 
 Route::get('/fail-write', function (Request $request) {
   //return $request->all();
-  $no_siri_pendaftaran = $request->no_siri_pendaftaran;
-  $data = $request->data;
+  $barcode = $request->barcode;
+  $page = $request->page;
+  $bil = $request->bil;
   $tag = $request->tag;
 
-  App\Fail::write($no_siri_pendaftaran,$data,$tag);
+  App\Fail::write($barcode, $page,$bil,$tag);
 
   return "done";
 });
@@ -98,11 +111,14 @@ Route::get('/report/kewpa', function () {
   return view('report',compact('data','n'));
 });
 
+Route::get('/report/kerosakan', 'ReportController@listkewpa9')->name('report.kerosakan');
+Route::get('/kewpa9/{id}/delete', 'ReportController@deletekewpa9');
+
 Route::get('/mail', 'MailControllers@html_email');
 
 
 //Route::post('/kewpa10', 'GenerateReportController@kewpa10');
-//Route::get('/kewpa10', 'GenerateReportController@kewpa10');
+Route::get('/kewpa9/pdf/{barcode}', 'GenerateReportController@kewpa9');
 Route::post('/kewpa11', 'GenerateReportController@kewpa11');
 Route::get('/kewpa11', 'GenerateReportController@kewpa11');
 
@@ -116,3 +132,7 @@ Route::get('/comingsoon', function(){
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/website', function(){
+  return view('web.index');
+});

@@ -51,6 +51,27 @@ Route::get('/', function(){
   return 'Amos api';
 });
 
+Route::post('/kerosakkan/store', function(Request $request){
+  $laporan = App\LaporanKerosakkan::create([
+    'barcode' => $request->barcode,
+    'perihal' => $request->perihal,
+    'pelapor' => $request->pelapor,
+  ]);
+
+  //return $request->all();
+
+  if($laporan){
+    return response()->json([
+      'status' => 'success',
+    ]);
+  }
+
+  return response()->json([
+    'status' => 'failed',
+  ]);
+
+});
+
 Route::get('/assets-jenis', function (Request $request){
 
   AssetsResource::withoutWrapping();
@@ -80,10 +101,15 @@ Route::get('/assets-jenis', function (Request $request){
   'assets.jenis_aset',
   'assets.pegawai',
   'assets.kod_lokasi',
+  'assets.tarikh_beli',
+  'assets.jenama_model',
+  'assets.harga_seunit',
+  'assets.update_spa',
   'verifications.asset_id'
   );
   //$query->orderBy('verifications.asset_id');
   $query->orderBy('assets.kod_lokasi');
+  //$query->limit(10);
   $assets = $query->get();
 
 
@@ -111,6 +137,10 @@ Route::get('/get-assets-by-location', function (Request $request){
     'assets.jenis_aset',
     'assets.pegawai',
     'assets.kod_lokasi',
+    'assets.tarikh_beli',
+    'assets.jenama_model',
+    'assets.harga_seunit',
+    'assets.update_spa',
     'verifications.asset_id'
   );
   //$q->orderBy('verifications.asset_id');
@@ -151,6 +181,9 @@ Route::get('/search-assets', function (Request $request){
     'assets.jenis_aset',
     'assets.pegawai',
     'assets.kod_lokasi',
+    'assets.tarikh_beli',
+    'assets.jenama_model',
+    'assets.harga_seunit',
     'verifications.asset_id'
   );
   $q->orderBy('assets.kod_lokasi');
@@ -198,6 +231,9 @@ Route::get('/assets', function (Request $request){
   'assets.no_casis',
   'assets.jenis_aset',
   'assets.pegawai',
+  'assets.tarikh_beli',
+  'assets.jenama_model',
+  'assets.harga_seunit',
   'assets.kod_lokasi',
   'verifications.asset_id'
   );
@@ -320,6 +356,7 @@ Route::post('/save-pemeriksaan-data',function (Request $request){
   $verifications = App\Verifications::updateOrCreate(
     ['asset_id' => $request->asset_id],
     [
+      'barcode' => $request->barcode,
       'jenis' => $request->jenis,
       'kod_lokasi_sebenar' => $location,
       'status' => $request->status,
@@ -365,4 +402,44 @@ Route::get('/get-pemeriksaan-data',function(Request $req){
   //$asset->updated_at = Carbon\Carbon::parse($update)->diffForHumans();
 
   return $data;
+});
+
+Route::post('/save-update-spa',function(Request $req){
+
+  $id = $req->id;
+  $email = $req->email;
+
+
+  if(empty($id) || empty($email)){
+    return response()->json([
+        'status' => 'failed'
+      ]);
+  }
+
+  $asset = Assets::find($id);
+  $asset_location = App\Locations::get_location_info($asset->kod_lokasi);
+
+  //dd($asset_location);
+
+  $is_valid_user = App\PegawaiPemeriksa::where('block_code',$asset_location->block_code)
+              ->where(function($query) use ($email){
+                $query->where('pemeriksa_1', $email)->orWhere('pemeriksa_2',$email);
+              })->count();
+
+  if(!$is_valid_user){
+    return response()->json([
+        'status' => 'failed',
+        'data' => 'denied user'
+      ]);
+  }
+
+  $tarikh_update_spa = now();
+
+  Assets::where('id',$id)->update(['update_spa' => $tarikh_update_spa]);
+
+  return response()->json([
+        'status' => 'success',
+        'data' => \Carbon\Carbon::parse($tarikh_update_spa)->format('d-m-yy h:i A')
+      ]);
+
 });

@@ -10,9 +10,52 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Assets;
+use Yajra\Datatables\Datatables;
 
 class AssetsController extends Controller
 {
+
+  public function list(){
+    //$assets = Assets::limit(100)->get();
+    return view('assetslist');
+
+
+  }
+
+  public function list2($status = NULL,$remark = NULL){
+
+    if(isset($status)){
+
+      $assets2 = Assets::join('verifications','assets.id','=','verifications.asset_id')
+      ->where('verifications.status','like','%'.$status.'%');
+
+      if($status != 0){
+        $assets = $assets2->paginate(20);
+        return view('assetslist2',compact('remark'))->withAssets($assets);
+      }
+
+      $assets1 = Assets::whereNotIn('id',function($query) {
+          $query->select('asset_id')->from('verifications');
+        })->get();
+
+      $assets = $assets1->merge($assets2->get())->paginate(20);
+
+      //return $assets;
+    }
+    else{
+      $assets = Assets::paginate(20);
+    }
+
+    return view('assetslist2', compact('remark'))->withAssets($assets);
+
+
+  }
+
+  public function datatable(){
+    $assets = Assets::all();
+    return DataTables::of($assets)->addIndexColumn()->make(true);
+  }
+
   public function updateBarcode(Request $request)
   {
     $validator = Validator::make($request->all(), [

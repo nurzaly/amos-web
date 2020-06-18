@@ -175,6 +175,7 @@ return [
 
         niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
         JeroenNoten\LaravelAdminLte\ServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,
 
     ],
 
@@ -225,6 +226,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class,
+        'Datatables' => Yajra\Datatables\Facades\Datatables::class,
 
     ],
 

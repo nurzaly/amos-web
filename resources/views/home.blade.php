@@ -62,6 +62,8 @@
                 $bil_aset = App\Assets::count_asset($block->short_name);
                 $bil_aset_veri = App\Assets::count_asset_verified($block->short_name);
                 $percent = $bil_aset_veri/$bil_aset*100;
+                //temp
+                //$percent = 100;
                 //$cls_percent = 'progress-bar-danger';
                 if($percent == 100){
                   $cls_percent = 'progress-bar-green';
@@ -92,7 +94,8 @@
                       <div class="progress-bar {{$cls_percent}}" style="width: {{$percent}}%"></div>
                     </div>
                 </td>
-                <td><span class="badge bg-gray">{{number_format($percent)}}%, ({{$bil_aset_veri}})</span></td>
+                  <td><span class="badge bg-gray">{{number_format($percent)}}%, ({{$bil_aset_veri}})</span></td>
+                {{-- <td><span class="badge bg-gray">{{number_format($percent)}}%, ({{number_format($bil_aset)}})</span></td> --}}
               </tr>
               @endforeach
           </tbody>
@@ -138,11 +141,11 @@
             <!-- /.box-body -->
             <div class="box-footer no-padding">
               <ul class="nav nav-pills nav-stacked">
-                <li><a href="#">A - Sedang Digunakan <span class="pull-right text-green"> {{$veri->a}}</span></a></li>
-                <li><a href="#">B - Tidak Digunakan <span class="pull-right text-red"> {{$veri->b}}</span></a></li>
-                <li><a href="#">C - Perlu Pembaikan <span class="pull-right text-yellow"> {{$veri->c}}</span></a></li>
-                <li><a href="#">D - Sedang Diselenggara <span class="pull-right text-aqua"> {{$veri->d}}</span></a></li>
-                <li><a href="#">E - Hilang <span class="pull-right text-light-blue"> {{$veri->e}}</span></a></li>
+                <li><a href="/amos/assets/status/0/Sedang Digunakan">A - Sedang Digunakan <span class="pull-right text-green"> {{$veri->a}}</span></a></li>
+                <li><a href="/amos/assets/status/1/Tidak Digunakan">B - Tidak Digunakan <span class="pull-right text-red"> {{$veri->b}}</span></a></li>
+                <li><a href="/amos/assets/status/2/Perlu Pembaikan">C - Perlu Pembaikan <span class="pull-right text-yellow"> {{$veri->c}}</span></a></li>
+                <li><a href="/amos/assets/status/3/Sedang Diselenggara">D - Sedang Diselenggara <span class="pull-right text-aqua"> {{$veri->d}}</span></a></li>
+                <li><a href="/amos/assets/status/4/Hilang">E - Hilang <span class="pull-right text-light-blue"> {{$veri->e}}</span></a></li>
               </ul>
             </div>
             <!-- /.footer -->
@@ -165,9 +168,9 @@
         <ul class="users-list clearfix">
           @foreach($pegawai_pemeriksa as $v)
           <li>
-            <img src="{{  asset('http://apps.ilpsdk.gov.my/stafed/images/face/'. explode('@',$v->email)[0] . '-' . md5($v->noic) . '.jpg') }}" alt="User Image" width="200">
+            <img src="{{  asset('http://apps.ilpsdk.gov.my/stafed/images/face/'. explode('@',$v->email)[0] . '.jpg') }}" alt="User Image" width="100">
             <a class="users-list-name" href="#">{{$v->nama}}</a>
-            <span class="users-list-date">{{App\Bahagian::getBahagian($v->bahagian)}}</span>
+            {{-- <span class="users-list-date">{{App\Bahagian::getBahagian($v->bahagian)}}</span> --}}
           </li>
           @endforeach
         </ul>

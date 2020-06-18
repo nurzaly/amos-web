@@ -93,7 +93,7 @@ return [
 
     'login_url' => 'login',
 
-    'register_url' => 'register',
+    'register_url' => '',
 
     /*
     |--------------------------------------------------------------------------
@@ -116,7 +116,7 @@ return [
         ],
         [
             'text'        => 'Assets',
-            'url'         => 'assets',
+            'url'         => 'assets2',
             'icon'        => 'file',
             //'label'       => 4,
             'label_color' => 'success',
@@ -175,6 +175,11 @@ return [
             'text'       => 'Jana KEWPA',
             'icon_color' => 'red',
             'url' => 'report/kewpa'
+        ],
+        [
+            'text'       => 'Laporan Kerosakan',
+            'icon_color' => 'red',
+            'url' => 'report/kerosakan'
         ],
         // [
         //     'text'       => 'KEWPA11',

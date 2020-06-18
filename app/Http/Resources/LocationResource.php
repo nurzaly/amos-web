@@ -24,9 +24,14 @@ class LocationResource extends JsonResource
           'block_name' =>  $this->block_name ?? NULL,
           'block_code' => $this->block_code ?? NULL,
           'location_name' =>  $this->location_name ?? NULL,
+          'total' =>  $this->get_total_asets($this->block_code),
           'pemeriksa_1' =>  $this->get_pegawai_name($this->pemeriksa_1),
           'pemeriksa_2' =>  $this->get_pegawai_name($this->pemeriksa_2),
         ];
+    }
+
+    private function get_total_asets($block){
+      return \App\Assets::where('kod_lokasi','like','%/'.$block.'/%')->count();
     }
 
     private function get_level($kod_lokasi){

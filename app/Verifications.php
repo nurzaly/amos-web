@@ -9,7 +9,7 @@ use DB;
 class Verifications extends Model
 {
   protected $fillable = [
-      'asset_id', 'kod_lokasi_sebenar', 'status', 'catatan', 'jenis','pemeriksa','updated_at'
+      'barcode','asset_id', 'kod_lokasi_sebenar', 'status', 'catatan', 'jenis','pemeriksa','updated_at'
   ];
 
 

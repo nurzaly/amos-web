@@ -9,6 +9,22 @@ use App;
 
 class GenerateReportController extends Controller {
 
+	public function kewpa9(Request $request){
+
+		$assets = App\Assets::where('barcode',$request->barcode)->first();
+		$perihal = App\LaporanKerosakkan::where('barcode',$request->barcode)->first();
+		$staf = App\Staff::where('email',$perihal->pelapor)->first();
+
+		//return view('pdf.kewpa9',compact('assets'));
+
+		$pdf = PDF::loadView( 'pdf.kewpa9', compact('assets','perihal','staf'), [],[
+			'debug'=>true,
+			'format'=> 'A4-P'
+		]);
+
+		return $pdf->stream( 'KEWPA9.pdf' );
+	}
+
 	public function kewpa11( Request $request ) {
 		//dd($request->all());
 		$data = (object)[];

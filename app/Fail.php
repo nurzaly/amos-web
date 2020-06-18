@@ -8,13 +8,14 @@ class Fail extends Model
 {
 
     protected $fillable = [
-        'no_siri_pendaftaran','data','tag'
+        'barcode','page','bil','tag'
     ];
 
-    public static function write($no_siri_pendaftaran,$data=NULL,$tag = NULL){
+    public static function write($barcode, $page=NULL, $bil=NULL, $tag = NULL){
       $log = new Fail();
-      $log->no_siri_pendaftaran = $no_siri_pendaftaran;
-      $log->data = $data;
+      $log->barcode = $barcode;
+      $log->page = $page;
+      $log->bil = $bil;
       $log->tag = $tag;
       $log->save();
     }
