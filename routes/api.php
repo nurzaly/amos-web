@@ -160,16 +160,33 @@ Route::get('/search-assets', function (Request $request){
   $search_key = $request->search_key;
   $q = DB::table('assets');
   $q->leftJoin('verifications','assets.id','=','verifications.asset_id');
-  $q->orWhere('assets.no_siri_pendaftaran', 'like', '%'.$search_key.'%');
-  $q->orWhere('assets.kategori', 'like', '%'.$search_key.'%');
-  $q->orWhere('assets.sub_kategori', 'like', '%'.$search_key.'%');
-  $q->orWhere('assets.jenis', 'like', '%'.$search_key.'%');
-  $q->orWhere('assets.no_casis', 'like', '%'.$search_key.'%');
-  $q->orWhere('assets.kod_lokasi', 'like', '%'.$search_key.'%');
-  $q->orWhere('assets.pegawai', 'like', '%'.$search_key.'%');
-  $q->orWhere('assets.jenis_aset', 'like', '%'.$search_key.'%');
-  $q->orderBy('verifications.asset_id');
-  $q->orderBy('assets.kod_lokasi');
+
+  // $searchValues = explode('.',$search_key); 
+
+  // foreach ($searchValues as $search_key) {
+  //   $q->orWhere('assets.no_siri_pendaftaran', 'like', '%'.$search_key.'%');
+  //   $q->orWhere('assets.kategori', 'like', '%'.$search_key.'%');
+  //   $q->orWhere('assets.sub_kategori', 'like', '%'.$search_key.'%');
+  //   $q->orWhere('assets.jenis', 'like', '%'.$search_key.'%');
+  //   $q->orWhere('assets.no_casis', 'like', '%'.$search_key.'%');
+  //   $q->orWhere('assets.kod_lokasi', 'like', '%'.$search_key.'%');
+  //   $q->orWhere('assets.pegawai', 'like', '%'.$search_key.'%');
+  //   $q->orWhere('assets.jenis_aset', 'like', '%'.$search_key.'%');
+  //   $q->orderBy('verifications.asset_id');
+  //   $q->orderBy('assets.kod_lokasi');
+  // }
+
+    $q->orWhere('assets.no_siri_pendaftaran', 'like', '%'.$search_key.'%');
+    $q->orWhere('assets.kategori', 'like', '%'.$search_key.'%');
+    $q->orWhere('assets.sub_kategori', 'like', '%'.$search_key.'%');
+    $q->orWhere('assets.jenis', 'like', '%'.$search_key.'%');
+    $q->orWhere('assets.no_casis', 'like', '%'.$search_key.'%');
+    $q->orWhere('assets.kod_lokasi', 'like', '%'.$search_key.'%');
+    $q->orWhere('assets.pegawai', 'like', '%'.$search_key.'%');
+    $q->orWhere('assets.jenis_aset', 'like', '%'.$search_key.'%');
+    $q->orderBy('verifications.asset_id');
+    $q->orderBy('assets.kod_lokasi');
+
   $q->select(
     'assets.id',
     'assets.no_siri_pendaftaran',
@@ -187,6 +204,8 @@ Route::get('/search-assets', function (Request $request){
     'verifications.asset_id'
   );
   $q->orderBy('assets.kod_lokasi');
+
+  //return $q->toSql();
 
   //return $q->toSql();
 

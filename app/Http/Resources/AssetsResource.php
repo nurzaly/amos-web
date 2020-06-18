@@ -31,7 +31,6 @@ class AssetsResource extends JsonResource
       'jenama_model' => $this->jenama_model,
       'harga_seunit' => 'RM' . $this->harga_seunit,
       'verification_id' => $this->asset_id ?? null,
-      'update_spa' => $this->get_update_spa($this->update_spa),
       'lokasi' => $this->get_short_name($this->kod_lokasi) ?? null,
     ];
   }
