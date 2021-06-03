@@ -42,7 +42,7 @@
             <tr>
               <td width="36%">1. Jenis Aset</td>
               <td width="2%">:</td>
-              <td width="62%">{{ucwords($assets->jenis)}}</td>
+              <td width="62%">{{ucwords($asset->jenis)}}</td>
             </tr>
             <tr>
               <td>&nbsp;</td>
@@ -52,7 +52,7 @@
             <tr>
               <td>2. Keterangan Aset</td>
               <td>:</td>
-              <td>{{ucwords($assets->kategori)}}, {{ucwords($assets->sub_kategori)}} @if($assets->no_casis), No Casis : {{$assets->no_casis}}@endif</td>
+              <td>{{ucwords($asset->kategori)}}, {{ucwords($asset->sub_kategori)}} @if($asset->no_casis), No Casis : {{$asset->no_casis}}@endif</td>
             </tr>
             <tr>
               <td>&nbsp;</td>
@@ -62,7 +62,7 @@
             <tr>
               <td>3. Nombor Siri Pendaftaran</td>
               <td>:</td>
-              <td>{{ucwords($assets->no_siri_pendaftaran)}}</td>
+              <td>{{ucwords($asset->no_siri_pendaftaran)}}</td>
             </tr>
             <tr>
               <td>&nbsp;</td>
@@ -101,7 +101,7 @@
               <td colspan="3">7. Perihal Kerosakan</td>
             </tr>
             <tr>
-              <td colspan="3" valign="top" class="line">{{$perihal->perihal}}</td>
+              <td colspan="3" valign="top" class="line">{{$asetRosak->perihal}}</td>
             </tr>
             <tr>
               <td colspan="3">&nbsp;</td>

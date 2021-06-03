@@ -3,6 +3,7 @@
 namespace App\ Http\ Controllers;
 
 use Illuminate\ Http\ Request;
+use App\LaporanKerosakkan;
 use DB;
 use PDF;
 use App;
@@ -11,18 +12,22 @@ class GenerateReportController extends Controller {
 
 	public function kewpa9(Request $request){
 
-		$assets = App\Assets::where('barcode',$request->barcode)->first();
-		$perihal = App\LaporanKerosakkan::where('barcode',$request->barcode)->first();
-		$staf = App\Staff::where('email',$perihal->pelapor)->first();
+		$asetRosak = LaporanKerosakkan::find($request->id);
+
+		$asset = App\Assets::where('barcode',$asetRosak->barcode)->first();
+		//$perihal = App\LaporanKerosakkan::where('barcode',$request->barcode)->first();
+		$staf = App\Staff::where('email',$asetRosak->pelapor)->first();
 
 		//return view('pdf.kewpa9',compact('assets'));
 
-		$pdf = PDF::loadView( 'pdf.kewpa9', compact('assets','perihal','staf'), [],[
+		$pdf = PDF::loadView( 'pdf.kewpa9', compact('asset','asetRosak','staf'), [],[
 			'debug'=>true,
 			'format'=> 'A4-P'
 		]);
+		
+		$filename = str_replace(' ', '', $asset->jenis) . strtolower($asset->barcode);
 
-		return $pdf->stream( 'KEWPA9.pdf' );
+		return $pdf->stream( 'KEWPA9-' . $filename . '.pdf' );
 	}
 
 	public function kewpa11( Request $request ) {

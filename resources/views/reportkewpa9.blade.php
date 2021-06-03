@@ -25,7 +25,7 @@
       <td>{{$v->asset->jenis ?? ""}}</td>
       <td>{{$v->perihal}}</td>
       <td>{{App\Staff::get_staf_info($v->pelapor)->nama}}</td>
-      <td><a href="/amos/kewpa9/pdf/{{$v->barcode}}">Jana Kewpa9</a> | <a href="/amos/kewpa9/{{$v->id}}/delete">Delete</a></td>
+      <td><a href="/amos/kewpa9/pdf/{{$v->id}}">Jana Kewpa9</a> | <a href="/amos/kewpa9/{{$v->id}}/delete">Delete</a></td>
 
     </tr>
 	  @endforeach

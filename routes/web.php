@@ -118,7 +118,7 @@ Route::get('/mail', 'MailControllers@html_email');
 
 
 //Route::post('/kewpa10', 'GenerateReportController@kewpa10');
-Route::get('/kewpa9/pdf/{barcode}', 'GenerateReportController@kewpa9');
+Route::get('/kewpa9/pdf/{id}', 'GenerateReportController@kewpa9');
 Route::post('/kewpa11', 'GenerateReportController@kewpa11');
 Route::get('/kewpa11', 'GenerateReportController@kewpa11');
 
